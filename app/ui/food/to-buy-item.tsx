@@ -1,9 +1,9 @@
 export default function GroceryItem({itemName}:{itemName:string}){
 
     return (
-        <div>
-            <input type="checkbox" />
-            <h1>{itemName}</h1>
+        <div className="flex flex-row">
+            <input type="checkbox"/>
+            <h1 className="p-2">{itemName}</h1>
         </div>
     )
 }
