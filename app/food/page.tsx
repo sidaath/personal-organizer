@@ -1,3 +1,4 @@
+import Inventory from "../ui/food/in-stock";
 import GroceryList from "../ui/food/to-buy";
 
 export default function Page(){
@@ -11,6 +12,7 @@ export default function Page(){
                 </div>
                 <div>
                     In stock
+                    <Inventory/>
                 </div>
             </div>
         </main>
