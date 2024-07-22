@@ -1,5 +1,6 @@
-export default function InventoryItem({item}:{item:string}){
+export default function InventoryItem(
+    {itemName, size, unit, quantity}:{itemName:string, size:number, unit:string, quantity:number}){
     return(
-        <p>{item}</p>
+        <p>{`${itemName} - ${size} ${unit}  x ${quantity}`}</p>
     )
 }

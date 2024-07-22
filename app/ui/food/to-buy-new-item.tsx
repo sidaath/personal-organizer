@@ -1,7 +1,7 @@
-import { addNewItemToBuy } from "@/app/lib/mocks"
+import { addNewItemToBuy } from "@/app/lib/food/mocks"
 
 export default async function NewItem(){
-    const units = ['kg', 'g', 'Nos', 'L', 'mL', 'dL']
+    const units = ['kg', 'g', 'pack', 'L', 'mL', 'dL']
     
     return(
         <form action={addNewItemToBuy} className="flex flex-row p-3 rounded-lg">
@@ -10,17 +10,17 @@ export default async function NewItem(){
                 name="itemName" 
                 type="text" 
                 placeholder="add item ..." 
-                className="w-4/6 rounded-md border border-gray-200 py-2 pl-10 text-sm placeholder:text-gray-500"/>
+                className="w-8/12 rounded-md border border-gray-200 py-2 pl-10 text-sm placeholder:text-gray-500"/>
             <input 
-                id="amount"
-                name="amount"
+                id="size"
+                name="size"
                 type="number"
-                placeholder="Amount"
-                className="w-1/6 rounded-md border border-gray-200 py-2 pl-10 text-sm placeholder:text-gray-500"/>
+                placeholder="Size"
+                className="w-1/12 rounded-md border border-gray-200 p-1 text-sm placeholder:text-gray-500"/>
             <select
                 id="unit"
                 name="unit"
-                className="w-1/6 rounded-md border border-gray-200 py-2 pl-10 text-sm placeholder:text-gray-500"
+                className="w-1/12 rounded-md border border-gray-200 text-sm placeholder:text-gray-500"
                 defaultValue=""
                 >
                 <option value="" disabled>
@@ -32,7 +32,13 @@ export default async function NewItem(){
                     </option>
                 ))}
             </select>
-            <button type="submit">
+            <input 
+                id="quantity"
+                name="quantity"
+                type="number"
+                placeholder="Qty"
+                className="w-1/12 rounded-md border border-gray-200 text-sm placeholder:text-gray-500"/>
+            <button type="submit" className="w-1/12">
                 add
             </button>
         </form>

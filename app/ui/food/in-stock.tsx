@@ -1,12 +1,19 @@
+import { getInventory } from "@/app/lib/food/mocks"
 import InventoryItem from "./in-stock-item"
 
-export default function Inventory(){
-    const list =  ['inv 1', 'inv 2', 'inv 3', 'inv 4']
+export default async  function Inventory(){
+    const list =  await getInventory()
 
     return(
         <main className="p-3">
         {list.map(invItem => 
-            <InventoryItem item={invItem} key={invItem}/>
+            <InventoryItem 
+                itemName={invItem.itemName}
+                size={invItem.size}
+                unit={invItem.units}
+                quantity={invItem.quantity}
+                key={invItem.itemName+invItem.quantity}
+            />
         )}
         </main>
     )
