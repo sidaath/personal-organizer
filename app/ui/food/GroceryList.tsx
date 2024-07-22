@@ -1,5 +1,5 @@
-import GroceryItem from "./to-buy-item"
-import NewItem from "./to-buy-new-item"
+import GroceryItem from "./GroceryItem"
+import NewItem from "./NewGroceryItem"
 import { getToBuyList } from "@/app/lib/food/mocks"
 
 export default async function GroceryList(){
@@ -7,7 +7,7 @@ const groceryList = await getToBuyList()
     
     
     return( 
-        <main className="p-3">
+        <main className="flex flex-col p-2">
             <NewItem />
             <div>
                 {groceryList.map(item => 
