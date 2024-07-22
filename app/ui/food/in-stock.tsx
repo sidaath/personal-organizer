@@ -6,7 +6,7 @@ export default function Inventory(){
     return(
         <main className="p-3">
         {list.map(invItem => 
-            <InventoryItem item={invItem}/>
+            <InventoryItem item={invItem} key={invItem}/>
         )}
         </main>
     )
