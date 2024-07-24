@@ -69,6 +69,22 @@ export async function addToInventory(formData: FormData){
 
 }
 
+export async function addToInvDirect(formData: FormData) {
+    console.log("running addToInvDirect")
+    const newInvItem = {
+        itemName : formData.get('itemName')?.toString()||'',
+        size : Number(formData.get('size')),
+        units : formData.get('unit')?.toString() ||'',
+        quantity:Number(formData.get('quantity')),
+        id : formData.get('id')?.toString()||'',
+        expiry: formData.get('exp')?.toString()||null
+    }
+    
+    inventory = [...inventory,  newInvItem]
+    revalidatePath('/food')
+
+}
+
 export async function increment(itemId:string){
     console.log("running increment")
     const index = inventory.findIndex(x => x.id===itemId)
@@ -81,6 +97,9 @@ export async function decrement(itemId:string){
     console.log("running decrement")
     const index = inventory.findIndex(x => x.id===itemId)
     inventory[index].quantity = inventory[index].quantity - 1;
+    if(inventory[index].quantity === 0){
+        inventory.splice(index, 1)
+    }
     await new Promise((resolve) => setTimeout(resolve, 1000));
     revalidatePath('/food')
 }

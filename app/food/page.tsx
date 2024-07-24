@@ -1,5 +1,7 @@
 import Inventory from "../ui/food/InventoryList";
 import GroceryList from "../ui/food/GroceryList";
+import NewItem from "../ui/food/NewGroceryItem";
+import { addToInvDirect, addToInventory } from "../lib/food/mocks";
 
 export default function Page(){
 
@@ -12,6 +14,7 @@ export default function Page(){
                 </div>
                 <div className="md:w-1/3 flex-auto bg-yellow-100">
                     In stock
+                    <NewItem formHandler={addToInvDirect} />
                     <Inventory/>
                 </div>
             </div>

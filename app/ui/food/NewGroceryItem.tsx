@@ -2,11 +2,11 @@ import { addNewItemToBuy } from "@/app/lib/food/mocks"
 
 import AddToCartIcon from "../icons/addtocard"
 
-export default async function NewItem(){
+export default async function NewItem({formHandler = (FormData: FormData) => {}}){
     const units = ['kg', 'g', 'pack', 'L', 'mL', 'dL']
     
     return(
-        <form action={addNewItemToBuy} className="flex flex-col lg:flex-row p-3 rounded gap-4 bg-green-200">
+        <form action={formHandler} className="flex flex-col lg:flex-row p-3 rounded gap-4 bg-green-200">
             <input 
                 id="itemName" 
                 name="itemName" 
