@@ -6,15 +6,10 @@ export default async  function Inventory(){
 
     return(
         <main className="p-3">
-        {list.map(invItem => 
+        {list.map(item => 
             <InventoryItem 
-                id={invItem.id}
-                itemName={invItem.itemName}
-                size={invItem.size}
-                unit={invItem.units}
-                quantity={invItem.quantity}
-                exp={invItem.exp}
-                key={invItem.id}
+                invItem={item}
+                key={item.id}
             />
         )}
         </main>

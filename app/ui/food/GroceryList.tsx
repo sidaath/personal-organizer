@@ -10,8 +10,11 @@ const groceryList = await getToBuyList()
         <main className="flex flex-col p-2">
             <NewItem />
             <div>
-                {groceryList.map(item => 
-                    <GroceryItem itemName={item.itemName} size={item.size} unit={item.units} quantity={item.quantity} id={item.id}key={item.id}/>
+                {groceryList.map(toBuyItem => 
+                    <GroceryItem 
+                        item={toBuyItem}
+                        key={toBuyItem.id}
+                        />
                 )}
             </div>
         </main>

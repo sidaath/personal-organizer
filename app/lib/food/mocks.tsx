@@ -41,9 +41,9 @@ async function removeFromToBuy(itemId:string){
 
 
 /* Mocks for the inventory list*/
-const invItem1 = {itemName:'Inv Item 1', size:7, units:'Nos', quantity:12, id:'4', exp:null}
-const invItem2 = {itemName:'Inv Item 2', size:14, units:'Nos', quantity:1, id:'5', exp:'2024-10-12'}
-const invItem3 = {itemName:'Inv Item 3', size:3, units:'kg', quantity: 98, id:'6', exp:null}
+const invItem1 = {itemName:'Inv Item 1', size:7, units:'Nos', quantity:12, id:'4', expiry:null}
+const invItem2 = {itemName:'Inv Item 2', size:14, units:'Nos', quantity:1, id:'5', expiry:'2024-10-12'}
+const invItem3 = {itemName:'Inv Item 3', size:3, units:'kg', quantity: 98, id:'6', expiry:null}
 
 let inventory = [invItem1, invItem2, invItem3]
 
@@ -60,7 +60,7 @@ export async function addToInventory(formData: FormData){
         units : formData.get('unit')?.toString() ||'',
         quantity:Number(formData.get('quantity')),
         id : formData.get('id')?.toString()||'',
-        exp: formData.get('exp')?.toString()||null
+        expiry: formData.get('exp')?.toString()||null
     }
     
     inventory = [...inventory,  newInvItem]
