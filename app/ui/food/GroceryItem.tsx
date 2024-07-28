@@ -9,6 +9,7 @@ export default function GroceryItem({ item }: { item: ToBuyItemType }) {
   function handleCheckBox() {
     setCheckTransition(async () => {
       console.log("client - running handleCheckBox");
+      console.log(item);
       const formData = new FormData();
       formData.append("itemName", item.itemName);
       formData.append("size", item.size.toString());
@@ -25,8 +26,8 @@ export default function GroceryItem({ item }: { item: ToBuyItemType }) {
         <div className="flex items-center h-5 mt-1">
           {!checkTransition ? (
             <input
-              id="hs-checkbox-delete"
-              name="hs-checkbox-delete"
+              id={item.id}
+              name={item.id}
               type="checkbox"
               onChange={handleCheckBox}
               className="border-gray-200 hover:cursor-pointer rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
@@ -42,20 +43,17 @@ export default function GroceryItem({ item }: { item: ToBuyItemType }) {
             </div>
           )}
         </div>
-        <label
-          htmlFor="hs-checkbox-delete"
-          className="ms-3 hover:cursor-pointer"
-        >
+        <label htmlFor={item.id} className="ms-3 hover:cursor-pointer">
           <span className="block text-sm font-semibold text-gray-800 dark:text-neutral-300">
             {item.itemName}
           </span>
           <span className="block text-sm font-semibold text-gray-800 dark:text-neutral-300">
-            {`${item.quantity}`}
+            {`x ${item.quantity}`}
           </span>
         </label>
-        <label htmlFor="hs-checkbox-delete" className="ms-3">
+        <label htmlFor={item.id} className="ms-3">
           <span
-            id="hs-checkbox-delete-description"
+            id={`${item.id}-description`}
             className="block text-sm text-gray-600 dark:text-neutral-500"
           >
             {`${item.size} ${item.units}`}

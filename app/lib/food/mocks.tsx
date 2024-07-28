@@ -1,7 +1,6 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { resolve } from "path";
 /* GLOBAL Id STUFF*/
 let temp = 10;
 
@@ -11,14 +10,14 @@ let temp = 10;
 const item1 = {
   itemName: "Item 1",
   size: 3,
-  units: "Nos",
+  units: "pack",
   quantity: 3,
   id: "1",
 };
 const item2 = {
   itemName: "Item 2",
   size: 7,
-  units: "Nos",
+  units: "pack",
   quantity: 6,
   id: "2",
 };
@@ -125,9 +124,11 @@ export async function addToInvDirect(formData: FormData) {
     size: Number(formData.get("size")),
     units: formData.get("unit")?.toString() || "",
     quantity: Number(formData.get("quantity")),
-    id: formData.get("id")?.toString() || "",
+    id: temp.toString(),
     expiry: formData.get("exp")?.toString() || null,
   };
+
+  temp++;
 
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
