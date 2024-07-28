@@ -22,8 +22,7 @@ const item2 = {
   id: "2",
 };
 const item3 = {
-  itemName:
-    "Item 3 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ",
+  itemName: "Item 3",
   size: 1,
   units: "kg",
   quantity: 2,

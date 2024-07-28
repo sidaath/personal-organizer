@@ -1,7 +1,7 @@
-export default function Page(){
-    return(
-        <main>
-            <h1>FINACEE HOME</h1>
-        </main>
-    )
+export default function Page() {
+  return (
+    <main>
+      <h1>UNDER CONSTRUCTION</h1>
+    </main>
+  );
 }
