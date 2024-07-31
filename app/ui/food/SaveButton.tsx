@@ -9,7 +9,7 @@ export function SaveButton({
   if (itemtype === "grocery") {
     icon = (
       <svg
-        className="shrink-0 size-6 stroke-black dark:stroke-white"
+        className="shrink-0 size-6 stroke-black dark:stroke-white hover:stroke-black"
         xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="24"
@@ -33,7 +33,7 @@ export function SaveButton({
   if (itemtype === "inventory") {
     icon = (
       <svg
-        className="shrink-0 size-6 stroke-black dark:stroke-white"
+        className="shrink-0 size-6 stroke-black dark:stroke-white fill-white hover:fill-black"
         xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="24"
