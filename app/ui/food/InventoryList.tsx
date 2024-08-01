@@ -1,8 +1,11 @@
 import { getInventory } from "@/app/lib/food/mocks";
 import InventoryItem from "./InventoryItem";
+import { Dayjs } from "dayjs";
+import { InventoryItemType } from "@/app/lib/food/definitions";
 
 export default async function Inventory() {
   const list = await getInventory();
+  console.log(list);
 
   return (
     <table className="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
@@ -35,7 +38,7 @@ export default async function Inventory() {
         </tr>
       </thead>
       <tbody>
-        {list.map((item) => {
+        {list.map((item: InventoryItemType) => {
           return <InventoryItem key={item.id} invItem={item} />;
         })}
       </tbody>

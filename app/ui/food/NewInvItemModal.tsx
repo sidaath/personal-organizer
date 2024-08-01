@@ -2,8 +2,23 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { SetStateAction, Dispatch } from "react";
+import SelectItem from "../common/SelectItem";
+import NumberInput from "../common/NumberInput";
+import dayjs from "dayjs";
 
-export default function NewInventoryModal({ closeModal }: { closeModal: any }) {
+export default function NewInventoryModal({
+  closeModal,
+  size,
+  setSize,
+  day,
+  setDay,
+}: {
+  closeModal: any;
+  size: number;
+  setSize: Dispatch<SetStateAction<number>>;
+  day: dayjs.Dayjs;
+  setDay: Dispatch<SetStateAction<dayjs.Dayjs>>;
+}) {
   const units = ["kg", "g", "pack", "L", "mL", "dL"];
   return (
     <div className="size-full fixed absolute top-0 left-0 right-0 bottom-0 overflow-x-hidden transition-all overflow-y-auto pointer-events-none">
@@ -41,32 +56,28 @@ export default function NewInventoryModal({ closeModal }: { closeModal: any }) {
             </button>
           </div>
           <div className="p-4 overflow-y-auto flex flex-row gap-2">
-            <input
+            <NumberInput
               id="size"
               name="size"
-              type="number"
-              placeholder="300 g"
+              placeholder=""
               required={true}
-              className="py-3 px-4 block w-1/4 border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-100 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+              disabled={false}
+              number={size}
+              setNumber={setSize}
             />
-            <select
+            <SelectItem
               id="unit"
               name="unit"
-              className="py-3 px-4 pe-9 block w-1/4 bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600"
               required={true}
-              defaultValue=""
-            >
-              <option value="" disabled>
-                Unit
-              </option>
-              {units.map((unit) => (
-                <option key={unit} value={unit}>
-                  {unit}
-                </option>
-              ))}
-            </select>
+              items={units}
+              disabled={false}
+            />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker />
+              <DatePicker
+                disablePast={true}
+                value={day}
+                onChange={(newValue) => setDay(newValue || dayjs())}
+              />
             </LocalizationProvider>
           </div>
           <div className="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
@@ -83,7 +94,7 @@ export default function NewInventoryModal({ closeModal }: { closeModal: any }) {
               type="submit"
               className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
             >
-              Save changes
+              Add
             </button>
           </div>
         </div>

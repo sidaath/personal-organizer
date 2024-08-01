@@ -1,6 +1,7 @@
 "use client";
 import { InventoryItemType } from "@/app/lib/food/definitions";
 import { decrement, increment } from "@/app/lib/food/mocks";
+import dayjs from "dayjs";
 import { useTransition } from "react";
 
 export default function InventoryItem({
@@ -20,7 +21,9 @@ export default function InventoryItem({
         {invItem.quantity}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-        {invItem.expiry ? invItem.expiry : "X"}
+        {invItem.expiry
+          ? dayjs(invItem.expiry).diff(dayjs(), "day") + " days"
+          : "X"}
       </td>
       <td className="px-6 py-4 whitespace-nowrap  text-end text-sm font-medium">
         {incrementTransition || decrementTransition ? (

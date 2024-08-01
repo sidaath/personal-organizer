@@ -1,5 +1,6 @@
 "use server";
 
+import dayjs from "dayjs";
 import { revalidatePath } from "next/cache";
 /* GLOBAL Id STUFF*/
 let temp = 10;
@@ -80,7 +81,7 @@ const invItem2 = {
   units: "Nos",
   quantity: 1,
   id: "5",
-  expiry: "2024-10-12",
+  expiry: dayjs("2024-10-29"),
 };
 const invItem3 = {
   itemName: "Inv Item 3",
@@ -95,7 +96,7 @@ let inventory = [invItem1, invItem2, invItem3];
 
 export async function getInventory() {
   console.log("running getInventory");
-  return inventory;
+  return JSON.parse(JSON.stringify(inventory));
 }
 
 export async function addToInventory(formData: FormData) {
@@ -106,7 +107,7 @@ export async function addToInventory(formData: FormData) {
     units: formData.get("unit")?.toString() || "",
     quantity: Number(formData.get("quantity")),
     id: formData.get("id")?.toString() || "",
-    expiry: formData.get("exp")?.toString() || null,
+    expiry: formData.get("exp") ? dayjs(formData.get("exp")?.toString()) : null,
   };
 
   await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -124,7 +125,7 @@ export async function addToInvDirect(formData: FormData) {
     units: formData.get("unit")?.toString() || "",
     quantity: Number(formData.get("quantity")),
     id: temp.toString(),
-    expiry: formData.get("exp")?.toString() || null,
+    expiry: formData.get("exp") ? dayjs(formData.get("exp")?.toString()) : null,
   };
 
   temp++;
