@@ -1,9 +1,11 @@
 export function SaveButton({
   itemtype,
   disabled,
+  onClickFunction,
 }: {
   itemtype: "grocery" | "inventory";
   disabled: boolean;
+  onClickFunction?: () => void | null;
 }) {
   let icon = null;
   if (itemtype === "grocery") {
@@ -47,15 +49,24 @@ export function SaveButton({
       </svg>
     );
   }
+
   return (
     <button
       type="submit"
       disabled={disabled}
       className="flex shrink-0 justify-center size-[46px] items-center gap-2 text-sm font-medium rounded-lg border border-transparent text-white hover:bg-slate-200 focus:outline-none focus:bg-blue-700  disabled:cursor-not-allowed"
+      {...(onClickFunction !== undefined
+        ? {
+            onClick: (e) => {
+              e.preventDefault();
+              onClickFunction();
+            },
+          }
+        : {})}
     >
       {disabled ? (
         <span
-          className="animate-spin inline-block size-4 border-[3px] border-black border-t-transparent text-white rounded-full"
+          className="animate-spin inline-block size-6 border-[3px] border-current border-t-transparent text-gray-800 rounded-full dark:text-white"
           role="status"
           aria-label="loading"
         ></span>

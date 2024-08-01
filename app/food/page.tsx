@@ -2,6 +2,7 @@ import Inventory from "../ui/food/InventoryList";
 import GroceryList from "../ui/food/GroceryList";
 import NewItem from "../ui/food/NewItem";
 import { addToInvDirect, addToInventory } from "../lib/food/mocks";
+import NewInventoryItem from "../ui/food/NewInventoryItem";
 
 export default function Page() {
   return (
@@ -11,9 +12,9 @@ export default function Page() {
           To buy
           <GroceryList />
         </div>
-        <div className="flex flex-col lg:w-2/5 overflow-y-auto bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+        <div className="relative flex flex-col lg:w-2/5 overflow-y-auto bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
           In stock
-          <NewItem itemtype="inventory" formHandler={addToInvDirect} />
+          <NewInventoryItem itemtype="inventory" formHandler={addToInvDirect} />
           <Inventory />
         </div>
       </div>
