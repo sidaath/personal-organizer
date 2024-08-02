@@ -2,7 +2,7 @@
 
 import { useRef, useState, useTransition } from "react";
 import { SaveButton } from "./SaveButton";
-import NewInventoryModal from "./NewInvItemModal";
+import NewInventoryModal from "./modals/NewInvItemModal";
 import TextInput from "../common/TextInput";
 import NumberCtrl from "../common/NumberCtrl";
 import dayjs from "dayjs";
@@ -23,6 +23,7 @@ export default function NewInventoryItem({
 
   async function submitForm(formData: FormData) {
     console.log("submitting form");
+    console.log(expDate.toString());
     formData.append("exp", expDate.toString());
     console.log(expDate);
     startSaveTransition(async () => {
@@ -31,6 +32,9 @@ export default function NewInventoryItem({
     setAddInvItem(false);
     formRef.current?.reset();
   }
+
+  //TODO
+  //allow null expiry date in direct add
 
   return (
     <form

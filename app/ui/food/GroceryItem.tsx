@@ -2,15 +2,26 @@
 
 import { ToBuyItemType } from "@/app/lib/food/definitions";
 import { addToInventory } from "@/app/lib/food/mocks";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
+import CheckboxModal from "./modals/CheckboxModal";
+import dayjs from "dayjs";
 
 export default function GroceryItem({ item }: { item: ToBuyItemType }) {
   const [checkTransition, setCheckTransition] = useTransition();
+  const [getExp, setGetExp] = useState(false);
+
+  const formData = new FormData();
+
   function handleCheckBox() {
+    setGetExp(true);
+  }
+
+  function submitNewInvItem() {
+    setGetExp(false);
     setCheckTransition(async () => {
       console.log("client - running handleCheckBox");
       console.log(item);
-      const formData = new FormData();
+
       formData.append("itemName", item.itemName);
       formData.append("size", item.size.toString());
       formData.append("unit", item.units);
@@ -24,14 +35,13 @@ export default function GroceryItem({ item }: { item: ToBuyItemType }) {
     <>
       <div className="relative flex items-start dark:bg-neutral-900 py-3 rounded">
         <div className="flex items-center h-5 mt-1">
-          {!checkTransition ? (
+          {!checkTransition && !getExp ? (
             <input
               id={item.id}
               name={item.id}
               type="checkbox"
               onChange={handleCheckBox}
               className="border-gray-200 hover:cursor-pointer rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-              aria-describedby="hs-checkbox-delete-description"
             />
           ) : (
             <div
@@ -53,13 +63,22 @@ export default function GroceryItem({ item }: { item: ToBuyItemType }) {
         </label>
         <label htmlFor={item.id} className="ms-3">
           <span
-            id={`${item.id}-description`}
+            id={`${item.id}`}
             className="block text-sm text-gray-600 dark:text-neutral-500"
           >
             {`${item.size} ${item.units}`}
           </span>
         </label>
       </div>
+      {getExp && !checkTransition && (
+        <form action={submitNewInvItem}>
+          <CheckboxModal
+            closeModal={setGetExp}
+            itemName={item.itemName}
+            formData={formData}
+          />
+        </form>
+      )}
     </>
   );
 }
