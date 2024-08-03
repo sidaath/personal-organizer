@@ -19,6 +19,7 @@ export default function NewItem({
   const formRef = useRef<HTMLFormElement>(null);
   const [size, setSize] = useState(0);
   const [quantity, setQuantity] = useState(0);
+  const [name, setName] = useState("");
 
   async function submitForm(formData: FormData) {
     console.log("submitting form");
@@ -28,6 +29,7 @@ export default function NewItem({
       formRef.current?.reset();
       setSize(0);
       setQuantity(0);
+      setName("");
     });
   }
 
@@ -44,6 +46,8 @@ export default function NewItem({
         placeholder="Item ..."
         disabled={saveTransition}
         required={true}
+        inputValue={name}
+        setInputValue={setName}
       />
       <NumberInput
         id="size"
@@ -51,8 +55,8 @@ export default function NewItem({
         placeholder="Amount"
         required={true}
         disabled={saveTransition}
-        number={quantity}
-        setNumber={setQuantity}
+        number={size}
+        setNumber={setSize}
       />
       <SelectItem
         id="unit"
@@ -62,8 +66,16 @@ export default function NewItem({
         defaultValue=""
         items={units}
       />
-      <NumberCtrl number={size} setNumber={setSize} disabled={saveTransition} />
-      <SaveButton itemtype={itemtype} disabled={saveTransition} />
+      <NumberCtrl
+        number={quantity}
+        setNumber={setQuantity}
+        disabled={saveTransition}
+      />
+      <SaveButton
+        itemtype={itemtype}
+        disabled={saveTransition || name === "" || quantity === 0 || size === 0}
+        loading={saveTransition}
+      />
     </form>
   );
 }

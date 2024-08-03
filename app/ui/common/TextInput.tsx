@@ -1,5 +1,7 @@
 "use client";
 
+import { Dispatch, SetStateAction } from "react";
+
 export default function TextInput({
   id,
   name,
@@ -8,6 +10,8 @@ export default function TextInput({
   required,
   disabled,
   maxLength,
+  inputValue,
+  setInputValue,
 }: {
   id: string;
   name: string;
@@ -16,6 +20,8 @@ export default function TextInput({
   required: boolean;
   disabled: boolean;
   maxLength?: number;
+  inputValue?: string | null;
+  setInputValue?: Dispatch<SetStateAction<string>> | null;
 }) {
   return (
     <div className="relative w-full">
@@ -34,6 +40,14 @@ export default function TextInput({
     [&:not(:placeholder-shown)]:pb-2
     autofill:pt-6
     autofill:pb-2`}
+        {...(setInputValue !== null
+          ? {
+              value: inputValue || "",
+              onChange: (e) => {
+                setInputValue?.(e.target.value);
+              },
+            }
+          : {})}
       />
       <label
         htmlFor={id}

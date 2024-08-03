@@ -1,17 +1,21 @@
 export function SaveButton({
   itemtype,
   disabled,
+  loading,
   onClickFunction,
 }: {
   itemtype: "grocery" | "inventory";
   disabled: boolean;
+  loading: boolean;
   onClickFunction?: () => void | null;
 }) {
   let icon = null;
   if (itemtype === "grocery") {
     icon = (
       <svg
-        className="shrink-0 size-6 stroke-black dark:stroke-white hover:stroke-black"
+        className={`shrink-0 size-6 stroke-black dark:stroke-white ${
+          disabled && `opacity-50`
+        } ${!disabled && `hover:stroke-black dark:stroke-white`}`}
         xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="24"
@@ -35,7 +39,9 @@ export function SaveButton({
   if (itemtype === "inventory") {
     icon = (
       <svg
-        className="shrink-0 size-6 stroke-black dark:stroke-white fill-black dark:fill-white hover:fill-black"
+        className={`shrink-0 size-6 stroke-black dark:stroke-white fill-black dark:fill-white ${
+          disabled && `opacity-50`
+        } ${!disabled && `hover:fill-black`}`}
         xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="24"
@@ -54,7 +60,9 @@ export function SaveButton({
     <button
       type="submit"
       disabled={disabled}
-      className="flex shrink-0 justify-center size-[46px] items-center gap-2 text-sm font-medium rounded-lg border border-transparent text-white hover:bg-slate-200 focus:outline-none focus:bg-blue-700  disabled:cursor-not-allowed"
+      className={`flex shrink-0 justify-center size-[46px] items-center gap-2 text-sm font-medium rounded-lg border border-transparent text-white ${
+        !disabled && `hover:cursor-pointer hover:bg-blue-200`
+      } focus:outline-none focus:bg-blue-700  disabled:cursor-not-allowed`}
       {...(onClickFunction !== undefined
         ? {
             onClick: (e) => {
@@ -64,7 +72,7 @@ export function SaveButton({
           }
         : {})}
     >
-      {disabled ? (
+      {loading ? (
         <span
           className="animate-spin inline-block size-6 border-[3px] border-current border-t-transparent text-gray-800 rounded-full dark:text-white"
           role="status"

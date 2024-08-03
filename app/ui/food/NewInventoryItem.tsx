@@ -5,7 +5,8 @@ import { SaveButton } from "./SaveButton";
 import NewInventoryModal from "./modals/NewInvItemModal";
 import TextInput from "../common/TextInput";
 import NumberCtrl from "../common/NumberCtrl";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
+import { Quando } from "next/font/google";
 
 export default function NewInventoryItem({
   formHandler,
@@ -18,23 +19,18 @@ export default function NewInventoryItem({
   const formRef = useRef<HTMLFormElement>(null);
   const [qty, setQty] = useState(0);
   const [addInvItem, setAddInvItem] = useState(false);
-  const [size, setSize] = useState(0);
-  const [expDate, setExpDate] = useState(dayjs());
+  const [name, setName] = useState("");
 
   async function submitForm(formData: FormData) {
     console.log("submitting form");
-    console.log(expDate.toString());
-    formData.append("exp", expDate.toString());
-    console.log(expDate);
     startSaveTransition(async () => {
       await formHandler(formData);
     });
     setAddInvItem(false);
+    setQty(0);
+    setName("");
     formRef.current?.reset();
   }
-
-  //TODO
-  //allow null expiry date in direct add
 
   return (
     <form
@@ -50,24 +46,21 @@ export default function NewInventoryItem({
         disabled={saveTransition}
         maxLength={50}
         required={true}
+        inputValue={name}
+        setInputValue={setName}
       />
       <NumberCtrl disabled={saveTransition} number={qty} setNumber={setQty} />
       <SaveButton
         itemtype={itemtype}
-        disabled={saveTransition}
+        disabled={qty === 0 || name === ""}
+        loading={saveTransition}
         onClickFunction={() => {
           setAddInvItem(true);
         }}
       />
 
       {addInvItem && !saveTransition && (
-        <NewInventoryModal
-          closeModal={() => setAddInvItem(false)}
-          size={size}
-          setSize={setSize}
-          day={expDate}
-          setDay={setExpDate}
-        />
+        <NewInventoryModal closeModal={() => setAddInvItem(false)} />
       )}
     </form>
   );

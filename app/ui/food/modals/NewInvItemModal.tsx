@@ -1,25 +1,22 @@
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { SetStateAction, Dispatch } from "react";
+import { SetStateAction, Dispatch, useState, useEffect } from "react";
 import SelectItem from "../../common/SelectItem";
 import NumberInput from "../../common/NumberInput";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
+import Toggle from "../../common/Toggle";
 
-export default function NewInventoryModal({
-  closeModal,
-  size,
-  setSize,
-  day,
-  setDay,
-}: {
-  closeModal: any;
-  size: number;
-  setSize: Dispatch<SetStateAction<number>>;
-  day: dayjs.Dayjs;
-  setDay: Dispatch<SetStateAction<dayjs.Dayjs>>;
-}) {
+export default function NewInventoryModal({ closeModal }: { closeModal: any }) {
   const units = ["kg", "g", "pack", "L", "mL", "dL"];
+  const [expiring, setExpiring] = useState(false);
+  const [size, setSize] = useState(0);
+  const [day, setDay] = useState<Dayjs | null>(null);
+
+  useEffect(() => {
+    console.log("use eff");
+    console.log(day?.toString());
+  }, [day]);
   return (
     <div className="size-full z-40 fixed absolute top-0 left-0 right-0 bottom-0 overflow-x-hidden transition-all overflow-y-auto pointer-events-none">
       <div className="sm:max-w-lg sm:w-full m-3 sm:mx-auto">
@@ -55,30 +52,59 @@ export default function NewInventoryModal({
               </svg>
             </button>
           </div>
-          <div className="p-4 overflow-y-auto flex flex-row gap-2">
-            <NumberInput
-              id="size"
-              name="size"
-              placeholder=""
-              required={true}
-              disabled={false}
-              number={size}
-              setNumber={setSize}
-            />
-            <SelectItem
-              id="unit"
-              name="unit"
-              required={true}
-              items={units}
-              disabled={false}
-            />
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                disablePast={true}
-                value={day}
-                onChange={(newValue) => setDay(newValue || dayjs())}
+          <div className="p-4 overflow-y-auto flex flex-row flex-0 gap-2">
+            <div className="flex w-1/3 flex-col gap-2 flex-none">
+              <NumberInput
+                id="size"
+                name="size"
+                placeholder=""
+                required={true}
+                disabled={false}
+                number={size}
+                setNumber={setSize}
               />
-            </LocalizationProvider>
+              <SelectItem
+                id="unit"
+                name="unit"
+                required={true}
+                items={units}
+                disabled={false}
+              />
+            </div>
+            <div className="flex w-2/3 flex-col">
+              {expiring && (
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    disablePast={true}
+                    value={day}
+                    onChange={(newValue) => setDay(newValue)}
+                    slotProps={{
+                      field: {
+                        clearable: true,
+                        onClear: () => {
+                          setExpiring(false);
+                          setDay(null);
+                        },
+                      },
+                    }}
+                  />
+                </LocalizationProvider>
+              )}
+              <input
+                type="text"
+                value={day == null ? "" : day.toString()}
+                hidden={true}
+                readOnly={true}
+                id="exp"
+                name="exp"
+              />
+              <Toggle
+                checked={expiring}
+                setChecked={setExpiring}
+                text="Expiring"
+                id="expiringInvItem"
+              />
+            </div>
           </div>
           <div className="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
             <button
@@ -91,6 +117,7 @@ export default function NewInventoryModal({
               Cancel
             </button>
             <button
+              disabled={size === 0 || (expiring && day === null)}
               type="submit"
               className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
             >

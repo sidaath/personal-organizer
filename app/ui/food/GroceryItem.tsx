@@ -2,7 +2,7 @@
 
 import { ToBuyItemType } from "@/app/lib/food/definitions";
 import { addToInventory } from "@/app/lib/food/mocks";
-import { useState, useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 import CheckboxModal from "./modals/CheckboxModal";
 import dayjs from "dayjs";
 
@@ -10,7 +10,7 @@ export default function GroceryItem({ item }: { item: ToBuyItemType }) {
   const [checkTransition, setCheckTransition] = useTransition();
   const [getExp, setGetExp] = useState(false);
 
-  const formData = new FormData();
+  const formDataRef = useRef(new FormData());
 
   function handleCheckBox() {
     setGetExp(true);
@@ -20,14 +20,13 @@ export default function GroceryItem({ item }: { item: ToBuyItemType }) {
     setGetExp(false);
     setCheckTransition(async () => {
       console.log("client - running handleCheckBox");
-      console.log(item);
-
-      formData.append("itemName", item.itemName);
-      formData.append("size", item.size.toString());
-      formData.append("unit", item.units);
-      formData.append("quantity", item.quantity.toString());
-      formData.append("id", item.id);
-      await addToInventory(formData);
+      formDataRef.current.append("itemName", item.itemName);
+      formDataRef.current.append("size", item.size.toString());
+      formDataRef.current.append("unit", item.units);
+      formDataRef.current.append("quantity", item.quantity.toString());
+      formDataRef.current.append("id", item.id);
+      console.log(formDataRef.current.get("exp"));
+      await addToInventory(formDataRef.current);
     });
   }
 
@@ -75,7 +74,7 @@ export default function GroceryItem({ item }: { item: ToBuyItemType }) {
           <CheckboxModal
             closeModal={setGetExp}
             itemName={item.itemName}
-            formData={formData}
+            formData={formDataRef.current}
           />
         </form>
       )}

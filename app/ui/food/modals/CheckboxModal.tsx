@@ -1,6 +1,6 @@
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import Toggle from "../../common/Toggle";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
@@ -14,12 +14,12 @@ export default function CheckboxModal({
   formData: FormData;
 }) {
   const [exp, setExp] = useState(true);
-  const [day, setDay] = useState(dayjs());
+  const [day, setDay] = useState<Dayjs | null>(null);
 
   useEffect(() => {
-    console.log("use effect running");
-    exp && formData.append("exp", day.toString());
-    !exp && formData.delete("exp");
+    if (!exp) {
+      formData.delete("exp");
+    }
   }, [exp]);
 
   return (
@@ -70,8 +70,11 @@ export default function CheckboxModal({
               <DatePicker
                 disabled={exp === false}
                 disablePast={true}
-                value={day}
-                onChange={(newVal) => setDay(newVal || dayjs())}
+                value={exp ? day : null}
+                onChange={(newVal) => {
+                  setDay(newVal);
+                  formData.append("exp", newVal?.toString() || "");
+                }}
               />
             </LocalizationProvider>
           </div>
@@ -85,6 +88,7 @@ export default function CheckboxModal({
               Cancel
             </button>
             <button
+              disabled={exp && day === null}
               type="submit"
               className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
             >
