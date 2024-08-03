@@ -5,8 +5,6 @@ import { addToInvDirect, addToInventory } from "../lib/food/mocks";
 import NewInventoryItem from "../ui/food/NewInventoryItem";
 
 export default function Page() {
-  //TODO
-  //check labels for inputs - console error
   return (
     <>
       <div className="flex h-screen w-screen space-x-1 flex-col lg:flex-row bg-white border border-gray-200 shadow-sm  p-4 md:p-3 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">

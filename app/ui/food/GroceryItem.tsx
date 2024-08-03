@@ -48,6 +48,7 @@ export default function GroceryItem({ item }: { item: ToBuyItemType }) {
               role="status"
               aria-label="loading"
             >
+              <input hidden id={item.id} />
               <span className="sr-only">Loading...</span>
             </div>
           )}
