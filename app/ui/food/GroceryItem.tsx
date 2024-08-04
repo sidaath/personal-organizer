@@ -4,7 +4,6 @@ import { ToBuyItemType } from "@/app/lib/food/definitions";
 import { addToInventory } from "@/app/lib/food/mocks";
 import { useRef, useState, useTransition } from "react";
 import CheckboxModal from "./modals/CheckboxModal";
-import dayjs from "dayjs";
 
 export default function GroceryItem({ item }: { item: ToBuyItemType }) {
   const [checkTransition, setCheckTransition] = useTransition();

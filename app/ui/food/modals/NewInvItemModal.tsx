@@ -4,7 +4,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useMemo, useState, useEffect } from "react";
 import SelectItem from "../../common/SelectItem";
 import NumberInput from "../../common/NumberInput";
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 import Toggle from "../../common/Toggle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
