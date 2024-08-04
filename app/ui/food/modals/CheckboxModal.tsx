@@ -2,7 +2,9 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
 import Toggle from "../../common/Toggle";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState, useMemo } from "react";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 export default function CheckboxModal({
   closeModal,
@@ -15,6 +17,18 @@ export default function CheckboxModal({
 }) {
   const [exp, setExp] = useState(true);
   const [day, setDay] = useState<Dayjs | null>(null);
+
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: prefersDarkMode ? "dark" : "light",
+        },
+      }),
+    [prefersDarkMode]
+  );
 
   useEffect(() => {
     if (!exp) {
@@ -66,17 +80,19 @@ export default function CheckboxModal({
               setChecked={setExp}
               text="EXPIRING"
             />
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                disabled={exp === false}
-                disablePast={true}
-                value={exp ? day : null}
-                onChange={(newVal) => {
-                  setDay(newVal);
-                  formData.append("exp", newVal?.toString() || "");
-                }}
-              />
-            </LocalizationProvider>
+            <ThemeProvider theme={theme}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  disabled={exp === false}
+                  disablePast={true}
+                  value={exp ? day : null}
+                  onChange={(newVal) => {
+                    setDay(newVal);
+                    formData.append("exp", newVal?.toString() || "");
+                  }}
+                />
+              </LocalizationProvider>
+            </ThemeProvider>
           </div>
           <div className="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
             <button

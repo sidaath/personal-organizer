@@ -1,17 +1,30 @@
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { SetStateAction, Dispatch, useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import SelectItem from "../../common/SelectItem";
 import NumberInput from "../../common/NumberInput";
 import dayjs, { Dayjs } from "dayjs";
 import Toggle from "../../common/Toggle";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 export default function NewInventoryModal({ closeModal }: { closeModal: any }) {
   const units = ["kg", "g", "pack", "L", "mL", "dL"];
   const [expiring, setExpiring] = useState(false);
   const [size, setSize] = useState(0);
   const [day, setDay] = useState<Dayjs | null>(null);
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: prefersDarkMode ? "dark" : "light",
+        },
+      }),
+    [prefersDarkMode]
+  );
 
   useEffect(() => {
     console.log("use eff");
@@ -73,22 +86,27 @@ export default function NewInventoryModal({ closeModal }: { closeModal: any }) {
             </div>
             <div className="flex w-2/3 flex-col">
               {expiring && (
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    disablePast={true}
-                    value={day}
-                    onChange={(newValue) => setDay(newValue)}
-                    slotProps={{
-                      field: {
-                        clearable: true,
-                        onClear: () => {
-                          setExpiring(false);
-                          setDay(null);
+                <ThemeProvider theme={theme}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      disablePast={true}
+                      value={day}
+                      onChange={(newValue) => setDay(newValue)}
+                      slotProps={{
+                        field: {
+                          clearable: true,
+                          onClear: () => {
+                            setExpiring(false);
+                            setDay(null);
+                          },
                         },
-                      },
-                    }}
-                  />
-                </LocalizationProvider>
+                        textField: {
+                          className: "dark:text-white",
+                        },
+                      }}
+                    />
+                  </LocalizationProvider>
+                </ThemeProvider>
               )}
               <input
                 type="text"
