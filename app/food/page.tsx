@@ -1,6 +1,6 @@
 import Inventory from "../ui/food/InventoryList";
 import GroceryList from "../ui/food/GroceryList";
-import { addToInvDirect } from "../lib/food/mocks";
+import { addToInvDirect } from "../server/food/inventory";
 import NewInventoryItem from "../ui/food/NewInventoryItem";
 
 export default function Page() {

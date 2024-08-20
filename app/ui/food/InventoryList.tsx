@@ -1,4 +1,4 @@
-import { getInventory } from "@/app/lib/food/mocks";
+import { getInventory } from "@/app/server/food/inventory";
 import InventoryItem from "./InventoryItem";
 import { Dayjs } from "dayjs";
 import { InventoryItemType } from "@/app/lib/food/definitions";

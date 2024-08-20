@@ -2,6 +2,9 @@
 
 import dayjs from "dayjs";
 import { revalidatePath } from "next/cache";
+import { InventoryItemType } from "./definitions";
+
+import { INVENTORY_URL } from "@/app/server/URL";
 /* GLOBAL Id STUFF*/
 let temp = 10;
 
@@ -60,7 +63,7 @@ export async function getToBuyList() {
   return toBuyItemsList;
 }
 
-async function removeFromToBuy(itemId: string) {
+export async function removeFromToBuy(itemId: string) {
   console.log("running removeFromToBuy");
   const index = toBuyItemsList.findIndex((x) => x.id === itemId);
   toBuyItemsList.splice(index, 1);

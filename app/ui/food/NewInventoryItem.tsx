@@ -5,8 +5,6 @@ import { SaveButton } from "./SaveButton";
 import NewInventoryModal from "./modals/NewInvItemModal";
 import TextInput from "../common/TextInput";
 import NumberCtrl from "../common/NumberCtrl";
-import dayjs, { Dayjs } from "dayjs";
-import { Quando } from "next/font/google";
 
 export default function NewInventoryItem({
   formHandler,
