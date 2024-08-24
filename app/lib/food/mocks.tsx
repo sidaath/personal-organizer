@@ -102,24 +102,6 @@ export async function getInventory() {
   return JSON.parse(JSON.stringify(inventory));
 }
 
-export async function addToInventory(formData: FormData) {
-  console.log("running addToInventory");
-  const newInvItem = {
-    itemName: formData.get("itemName")?.toString() || "",
-    size: Number(formData.get("size")),
-    units: formData.get("unit")?.toString() || "",
-    quantity: Number(formData.get("quantity")),
-    id: formData.get("id")?.toString() || "",
-    expiry: formData.get("exp") ? dayjs(formData.get("exp")?.toString()) : null,
-  };
-
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-
-  inventory = [...inventory, newInvItem];
-  removeFromToBuy(newInvItem.id);
-  revalidatePath("/food");
-}
-
 export async function addToInvDirect(formData: FormData) {
   console.log("running addToInvDirect");
   const newInvItem = {

@@ -5,19 +5,21 @@ import { removeFromToBuy } from "../../lib/food/mocks";
 import { revalidatePath } from "next/cache";
 import dayjs from "dayjs";
 
-export async function getInventory() {
+export async function getInventory(): Promise<[]> {
   console.log("running getInventory");
   try {
-    const inventory = await fetch(INVENTORY_URL);
-    const data = await inventory.json();
+    const inventory: Response = await fetch(INVENTORY_URL);
+    const data: [] = await inventory.json();
     return data;
   } catch (error) {
-    console.log("FAILED : fetch for inventory items at " + INVENTORY_URL);
+    console.log(
+      "FAILED: getInventory() : fetch for inventory items at " + INVENTORY_URL
+    );
     return [];
   }
 }
 
-export async function addToInventory(formData: FormData) {
+export async function addToInventory(formData: FormData): Promise<number> {
   console.log("running addToInventory");
   const newInvItem = {
     itemName: formData.get("itemName")?.toString() || "",
@@ -28,26 +30,33 @@ export async function addToInventory(formData: FormData) {
     expiry: formData.get("exp") ? dayjs(formData.get("exp")?.toString()) : null,
   };
 
-  const response = await fetch(INVENTORY_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(newInvItem),
-  });
+  try {
+    const response = await fetch(INVENTORY_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newInvItem),
+    });
 
-  const resData = await response.json();
-  console.log("******************");
-  console.log(response);
+    const resData = await response.json();
+    console.log("******************");
+    console.log(response);
 
-  if (response.status == 201) {
-    console.log("sss");
-    removeFromToBuy(newInvItem.id.toString());
+    if (response.status == 201) {
+      console.log("sss");
+      removeFromToBuy(newInvItem.id.toString());
+      revalidatePath("/food");
+    }
+    return response.status;
+  } catch (error: any) {
+    console.log("FAILED: POST to " + INVENTORY_URL);
+    console.log(error.cause);
+    return Number(error.cause.errno);
   }
-  revalidatePath("/food");
 }
 
-export async function addToInvDirect(formData: FormData) {
+export async function addToInvDirect(formData: FormData): Promise<number> {
   console.log("running addToInvDirect");
   const newInvItem = {
     itemName: formData.get("itemName")?.toString() || "",
@@ -58,20 +67,23 @@ export async function addToInvDirect(formData: FormData) {
     expiry: formData.get("exp") ? dayjs(formData.get("exp")?.toString()) : null,
   };
 
-  const response = await fetch(INVENTORY_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(newInvItem),
-  });
+  console.log(newInvItem);
 
-  const resData = await response.json();
-
-  if (response.status == 201) {
-    removeFromToBuy(newInvItem.id.toString());
-  } else {
-    console.log("Failed : failed to add inv item");
+  try {
+    const response = await fetch(INVENTORY_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newInvItem),
+    });
+    const resData = await response.json();
+    if (response.status === 201) {
+      revalidatePath("/food");
+    }
+    return response.status;
+  } catch (error: any) {
+    console.log("FAILED : addToInvDirect(): failed to add inv item");
+    return Number(error.cause.errno);
   }
-  revalidatePath("/food");
 }

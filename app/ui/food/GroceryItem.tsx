@@ -1,7 +1,7 @@
 "use client";
 
 import { ToBuyItemType } from "@/app/lib/food/definitions";
-import { addToInventory } from "@/app/lib/food/mocks";
+import { addToInventory } from "@/app/server/food/inventory";
 import { useRef, useState, useTransition } from "react";
 import CheckboxModal from "./modals/CheckboxModal";
 

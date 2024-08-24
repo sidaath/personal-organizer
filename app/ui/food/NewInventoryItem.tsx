@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { SaveButton } from "./SaveButton";
 import NewInventoryModal from "./modals/NewInvItemModal";
 import TextInput from "../common/TextInput";
@@ -10,7 +10,7 @@ export default function NewInventoryItem({
   formHandler,
   itemtype,
 }: {
-  formHandler: (FormData: FormData) => {};
+  formHandler: (FormData: FormData) => number;
   itemtype: "grocery" | "inventory";
 }) {
   const [saveTransition, startSaveTransition] = useTransition();
@@ -22,12 +22,19 @@ export default function NewInventoryItem({
   async function submitForm(formData: FormData) {
     console.log("submitting form");
     startSaveTransition(async () => {
-      await formHandler(formData);
+      const resVar = await formHandler(formData);
+      console.log("res var -- " + resVar);
+      if (resVar < 0) {
+        console.log("submit error");
+        alert("Network Error : Try later");
+        setAddInvItem(false);
+      } else {
+        console.log("NOT submit error");
+        setQty(0);
+        setName("");
+        formRef.current?.reset();
+      }
     });
-    setAddInvItem(false);
-    setQty(0);
-    setName("");
-    formRef.current?.reset();
   }
 
   return (
