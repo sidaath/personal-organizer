@@ -10,7 +10,7 @@ export default function NewInventoryItem({
   formHandler,
   itemtype,
 }: {
-  formHandler: (FormData: FormData) => number;
+  formHandler: (FormData: FormData) => Promise<number>;
   itemtype: "grocery" | "inventory";
 }) {
   const [saveTransition, startSaveTransition] = useTransition();

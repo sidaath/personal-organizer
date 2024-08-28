@@ -1,6 +1,7 @@
 import GroceryItem from "./GroceryItem";
 import NewItem from "./NewItem";
-import { addNewItemToBuy, getToBuyList } from "@/app/lib/food/mocks";
+import { addNewItemToBuy } from "@/app/lib/food/mocks";
+import { getToBuyList } from "@/app/server/food/checklist";
 
 export default async function GroceryList() {
   const groceryList = await getToBuyList();
