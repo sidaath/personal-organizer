@@ -26,7 +26,7 @@ export default function NewInventoryItem({
       console.log("res var -- " + resVar);
       if (resVar < 0) {
         console.log("submit error");
-        alert("Network Error : Try later");
+        alert("Network Error : Try later  ");
         setAddInvItem(false);
       } else {
         console.log("NOT submit error");
