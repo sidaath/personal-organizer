@@ -58,16 +58,11 @@ export async function addNewItemToBuy(formData: FormData) {
   revalidatePath("/food");
 }
 
-export async function getToBuyList() {
-  console.log("running getToBuyList");
-  return toBuyItemsList;
-}
-
-export async function removeFromToBuy(itemId: string) {
-  console.log("running removeFromToBuy");
-  const index = toBuyItemsList.findIndex((x) => x.id === itemId);
-  toBuyItemsList.splice(index, 1);
-}
+// export async function removeFromToBuy(itemId: string) {
+//   console.log("running removeFromToBuy");
+//   const index = toBuyItemsList.findIndex((x) => x.id === itemId);
+//   toBuyItemsList.splice(index, 1);
+// }
 
 /* Mocks for the inventory list*/
 const invItem1 = {
