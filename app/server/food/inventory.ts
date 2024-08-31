@@ -10,10 +10,11 @@ export async function getInventory(): Promise<[]> {
     const inventory: Response = await fetch(INVENTORY_URL);
     const data: [] = await inventory.json();
     return data;
-  } catch (error) {
-    console.log(
+  } catch (error: any) {
+    console.error(
       "FAILED: getInventory() : fetch for inventory items at " + INVENTORY_URL
     );
+    console.log(error.cause);
     return [];
   }
 }
@@ -47,7 +48,8 @@ export async function addToInvDirect(formData: FormData): Promise<number> {
     }
     return response.status;
   } catch (error: any) {
-    console.log("FAILED : addToInvDirect(): failed to add inv item");
+    console.error("FAILED : addToInvDirect(): failed to add inv item");
+    console.log(error.cause);
     return Number(error.cause.errno);
   }
 }
@@ -64,8 +66,8 @@ export async function editQuantity(itemId: number, val: number) {
       },
       body: JSON.stringify({ id: itemId, value: value_string }),
     });
-  } catch (error) {
-    console.log("FAIL : increment : inventory.ts");
-    console.log(error);
+  } catch (error: any) {
+    console.error("FAIL : increment : inventory.ts");
+    console.log(error.cause);
   }
 }

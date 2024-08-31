@@ -10,10 +10,11 @@ export async function getToBuyList(): Promise<[ToBuyItemType] | []> {
     const inventory: Response = await fetch(CHECKLIST_URL);
     const data: [] = await inventory.json();
     return data;
-  } catch (error) {
-    console.log(
+  } catch (error: any) {
+    console.error(
       "FAILED: getToBuyList() : fetch for checklist items at " + CHECKLIST_URL
     );
+    console.log(error.cause);
     return [];
   }
 }
@@ -36,7 +37,7 @@ export async function addToInventory(formData: FormData): Promise<Number> {
     return response.status;
   } catch (error: any) {
     console.error("FAILED : addToInventory() : server/checklist");
-    console.log(error);
+    console.log(error.cause);
     return Number(error.cause.errno);
   }
 }
@@ -66,7 +67,7 @@ export async function addNewItemToBuy(formData: FormData): Promise<Number> {
     return response.status;
   } catch (error: any) {
     console.error("FAILED : addNewItemToBuy() : chekclist");
-    console.log(error);
+    console.log(error.cause);
     return error.cause.errno;
   }
 }
