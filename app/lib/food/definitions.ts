@@ -1,7 +1,7 @@
 import { Dayjs } from "dayjs";
 
 export type InventoryItemType = {
-  id: string;
+  id: number;
   itemName: string;
   size: number;
   units: string;
@@ -10,7 +10,7 @@ export type InventoryItemType = {
 };
 
 export type ToBuyItemType = {
-  id: string;
+  id: number;
   itemName: string;
   size: number;
   units: string;

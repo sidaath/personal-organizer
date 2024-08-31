@@ -5,7 +5,6 @@ import { InventoryItemType } from "@/app/lib/food/definitions";
 
 export default async function Inventory() {
   const list = await getInventory();
-  console.log(list);
 
   return (
     <table className="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">

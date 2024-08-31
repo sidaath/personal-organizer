@@ -1,16 +1,30 @@
 "use client";
 import { InventoryItemType } from "@/app/lib/food/definitions";
-import { decrement, increment } from "@/app/lib/food/mocks";
+import { editQuantity } from "@/app/server/food/inventory";
 import dayjs from "dayjs";
-import { useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 
 export default function InventoryItem({
   invItem,
 }: {
   invItem: InventoryItemType;
 }) {
-  const [incrementTransition, startIncrementTransition] = useTransition();
-  const [decrementTransition, startDecrementTransition] = useTransition();
+  const [quantity, setQuantity] = useState(invItem.quantity);
+  const [editQuantityTransition, startTransition] = useTransition();
+  useEffect(() => {
+    if (quantity === invItem.quantity) {
+      return;
+    }
+    const callEditQuantity = setTimeout(async () => {
+      startTransition(async () => {
+        await editQuantity(invItem.id, quantity);
+      });
+    }, 500);
+
+    return () => {
+      clearTimeout(callEditQuantity);
+    };
+  }, [quantity]);
 
   return (
     <tr className="odd:bg-white even:bg-gray-100 dark:odd:bg-neutral-900 dark:even:bg-neutral-800">
@@ -18,7 +32,7 @@ export default function InventoryItem({
         {`${invItem.itemName} - ${invItem.size} ${invItem.units}`}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-        {invItem.quantity}
+        {quantity}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
         {invItem.expDate
@@ -26,7 +40,7 @@ export default function InventoryItem({
           : "X"}
       </td>
       <td className="px-6 py-4 whitespace-nowrap  text-end text-sm font-medium">
-        {incrementTransition || decrementTransition ? (
+        {editQuantityTransition ? (
           <span
             className="inline-flex justify-center items-center animate-spin inline-block size-6 border-[3px] border-black border-t-transparent text-white rounded-full"
             role="status"
@@ -38,12 +52,12 @@ export default function InventoryItem({
               type="button"
               className="size-7 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
               aria-label="Decrease"
-              onClick={async () => {
-                startDecrementTransition(async () => {
-                  await decrement(invItem.id);
+              onClick={() => {
+                setQuantity((oldQty) => {
+                  return oldQty - 1;
                 });
               }}
-              disabled={decrementTransition}
+              disabled={editQuantityTransition || quantity === 0}
             >
               <svg
                 className="shrink-0 size-3.5"
@@ -65,11 +79,11 @@ export default function InventoryItem({
               className="size-7 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
               aria-label="Increase"
               onClick={() => {
-                startIncrementTransition(async () => {
-                  await increment(invItem.id);
+                setQuantity((oldQty) => {
+                  return oldQty + 1;
                 });
               }}
-              disabled={incrementTransition}
+              disabled={editQuantityTransition}
             >
               <svg
                 className="shrink-0 size-3.5"

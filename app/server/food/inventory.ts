@@ -88,3 +88,21 @@ export async function addToInvDirect(formData: FormData): Promise<number> {
     return Number(error.cause.errno);
   }
 }
+
+export async function editQuantity(itemId: number, val: number) {
+  console.log("running editQuantity");
+  const value_string: string = "quantity;;" + val.toString();
+
+  try {
+    const response = await fetch(INVENTORY_URL, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: itemId, value: value_string }),
+    });
+  } catch (error) {
+    console.log("FAIL : increment : inventory.ts");
+    console.log(error);
+  }
+}

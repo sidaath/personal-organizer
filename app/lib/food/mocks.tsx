@@ -1,12 +1,12 @@
-"use server";
+// "use server";
 
-import dayjs from "dayjs";
-import { revalidatePath } from "next/cache";
-import { InventoryItemType } from "./definitions";
+// import dayjs from "dayjs";
+// import { revalidatePath } from "next/cache";
+// import { InventoryItemType } from "./definitions";
 
-import { INVENTORY_URL } from "@/app/server/URL";
+// import { INVENTORY_URL } from "@/app/server/URL";
 /* GLOBAL Id STUFF*/
-let temp = 10;
+// let temp = 10;
 
 /* */
 
@@ -65,32 +65,32 @@ let temp = 10;
 // }
 
 /* Mocks for the inventory list*/
-const invItem1 = {
-  itemName: "Inv Item 1",
-  size: 7,
-  units: "Nos",
-  quantity: 12,
-  id: "4",
-  expiry: null,
-};
-const invItem2 = {
-  itemName: "Inv Item 2",
-  size: 14,
-  units: "Nos",
-  quantity: 1,
-  id: "5",
-  expiry: dayjs("2024-10-29"),
-};
-const invItem3 = {
-  itemName: "Inv Item 3",
-  size: 3,
-  units: "kg",
-  quantity: 98,
-  id: "6",
-  expiry: null,
-};
+// const invItem1 = {
+//   itemName: "Inv Item 1",
+//   size: 7,
+//   units: "Nos",
+//   quantity: 12,
+//   id: "4",
+//   expiry: null,
+// };
+// const invItem2 = {
+//   itemName: "Inv Item 2",
+//   size: 14,
+//   units: "Nos",
+//   quantity: 1,
+//   id: "5",
+//   expiry: dayjs("2024-10-29"),
+// };
+// const invItem3 = {
+//   itemName: "Inv Item 3",
+//   size: 3,
+//   units: "kg",
+//   quantity: 98,
+//   id: "6",
+//   expiry: null,
+// };
 
-let inventory = [invItem1, invItem2, invItem3];
+// let inventory = [invItem1, invItem2, invItem3];
 
 // export async function getInventory() {
 //   console.log("running getInventory");
@@ -116,21 +116,21 @@ let inventory = [invItem1, invItem2, invItem3];
 //   revalidatePath("/food");
 // }
 
-export async function increment(itemId: string) {
-  console.log("running increment");
-  const index = inventory.findIndex((x) => x.id === itemId);
-  inventory[index].quantity = inventory[index].quantity + 1;
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  revalidatePath("/food");
-}
+// export async function increment(itemId: string) {
+//   console.log("running increment");
+//   const index = inventory.findIndex((x) => x.id === itemId);
+//   inventory[index].quantity = inventory[index].quantity + 1;
+//   await new Promise((resolve) => setTimeout(resolve, 1000));
+//   revalidatePath("/food");
+// }
 
-export async function decrement(itemId: string) {
-  console.log("running decrement");
-  const index = inventory.findIndex((x) => x.id === itemId);
-  inventory[index].quantity = inventory[index].quantity - 1;
-  if (inventory[index].quantity === 0) {
-    inventory.splice(index, 1);
-  }
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  revalidatePath("/food");
-}
+// export async function decrement(itemId: string) {
+//   console.log("running decrement");
+//   const index = inventory.findIndex((x) => x.id === itemId);
+//   inventory[index].quantity = inventory[index].quantity - 1;
+//   if (inventory[index].quantity === 0) {
+//     inventory.splice(index, 1);
+//   }
+//   await new Promise((resolve) => setTimeout(resolve, 1000));
+//   revalidatePath("/food");
+// }
