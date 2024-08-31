@@ -63,7 +63,9 @@ export async function addToInvDirect(formData: FormData): Promise<number> {
     units: formData.get("unit")?.toString() || "",
     quantity: Number(formData.get("quantity")),
     id: 0,
-    expiry: formData.get("exp") ? dayjs(formData.get("exp")?.toString()) : null,
+    expDate: formData.get("exp")
+      ? dayjs(formData.get("exp")?.toString()).format("YYYY-MM-DD")
+      : null,
   };
 
   console.log(newInvItem);
