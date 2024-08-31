@@ -18,43 +18,6 @@ export async function getInventory(): Promise<[]> {
   }
 }
 
-// export async function addToInventory(formData: FormData): Promise<number> {
-//   console.log("running addToInventory");
-//   const newInvItem = {
-//     itemName: formData.get("itemName")?.toString() || "",
-//     size: Number(formData.get("size")),
-//     units: formData.get("unit")?.toString() || "",
-//     quantity: Number(formData.get("quantity")),
-//     id: Number(formData.get("id")),
-//     expiry: formData.get("exp") ? dayjs(formData.get("exp")?.toString()) : null,
-//   };
-
-//   try {
-//     const response = await fetch(INVENTORY_URL, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify(newInvItem),
-//     });
-
-//     const resData = await response.json();
-//     console.log("******************");
-//     console.log(response);
-
-//     if (response.status == 201) {
-//       console.log("sss");
-//       removeFromToBuy(newInvItem.id.toString());
-//       revalidatePath("/food");
-//     }
-//     return response.status;
-//   } catch (error: any) {
-//     console.log("FAILED: POST to " + INVENTORY_URL);
-//     console.log(error.cause);
-//     return Number(error.cause.errno);
-//   }
-// }
-
 export async function addToInvDirect(formData: FormData): Promise<number> {
   console.log("running addToInvDirect");
   const newInvItem = {
