@@ -1,6 +1,6 @@
 import GroceryItem from "./GroceryItem";
 import NewItem from "./NewItem";
-import { addNewItemToBuy } from "@/app/lib/food/mocks";
+import { addNewItemToBuy } from "@/app/server/food/checklist";
 import { getToBuyList } from "@/app/server/food/checklist";
 
 export default async function GroceryList() {

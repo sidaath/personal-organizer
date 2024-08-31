@@ -23,7 +23,7 @@ export async function addToInventory(formData: FormData): Promise<Number> {
   const id = Number(formData.get("id"));
   try {
     const response: Response = await fetch(CHECKLIST_URL, {
-      method: "POST",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
@@ -41,4 +41,32 @@ export async function addToInventory(formData: FormData): Promise<Number> {
   }
 }
 
-//TODO : ADDNEWITEMTOBUY
+export async function addNewItemToBuy(formData: FormData): Promise<Number> {
+  console.log("ruinning addNewItemToBuy");
+  const newItem = {
+    itemName: formData.get("itemName")?.toString() || "",
+    size: Number(formData.get("size")),
+    units: formData.get("unit")?.toString() || "",
+    quantity: Number(formData.get("quantity")),
+    id: 1,
+  };
+
+  try {
+    const response = await fetch(CHECKLIST_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newItem),
+    });
+
+    if (response.status == 201) {
+      revalidatePath("/food");
+    }
+    return response.status;
+  } catch (error: any) {
+    console.error("FAILED : addNewItemToBuy() : chekclist");
+    console.log(error);
+    return error.cause.errno;
+  }
+}

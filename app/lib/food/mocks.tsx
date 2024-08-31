@@ -11,52 +11,52 @@ let temp = 10;
 /* */
 
 /* Mocks for the to buy grocery list*/
-const item1 = {
-  itemName: "Item 1",
-  size: 3,
-  units: "pack",
-  quantity: 3,
-  id: "1",
-};
-const item2 = {
-  itemName: "Item 2",
-  size: 7,
-  units: "pack",
-  quantity: 6,
-  id: "2",
-};
-const item3 = {
-  itemName: "Item 3",
-  size: 1,
-  units: "kg",
-  quantity: 2,
-  id: "3",
-};
+// const item1 = {
+//   itemName: "Item 1",
+//   size: 3,
+//   units: "pack",
+//   quantity: 3,
+//   id: "1",
+// };
+// const item2 = {
+//   itemName: "Item 2",
+//   size: 7,
+//   units: "pack",
+//   quantity: 6,
+//   id: "2",
+// };
+// const item3 = {
+//   itemName: "Item 3",
+//   size: 1,
+//   units: "kg",
+//   quantity: 2,
+//   id: "3",
+// };
 
-let toBuyItemsList = [item1, item2, item3];
+// let toBuyItemsList = [item1, item2, item3];
 
-export async function addNewItemToBuy(formData: FormData) {
-  console.log("ruinning addNewItemToBuy");
-  const newItem = {
-    itemName: formData.get("itemName")?.toString() || "",
-    size: Number(formData.get("size")),
-    units: formData.get("unit")?.toString() || "",
-    quantity: Number(formData.get("quantity")),
-    id: temp.toString(),
-  };
+// export async function addNewItemToBuy(formData: FormData) {
+//   console.log("ruinning addNewItemToBuy");
+//   const newItem = {
+//     itemName: formData.get("itemName")?.toString() || "",
+//     size: Number(formData.get("size")),
+//     units: formData.get("unit")?.toString() || "",
+//     quantity: Number(formData.get("quantity")),
+//     id: temp.toString(),
+//   };
 
-  temp = temp + 1;
-  console.log("start wait");
-  const wait = (ms: number) =>
-    new Promise((resolve) => {
-      setTimeout(resolve, ms);
-    });
+//   temp = temp + 1;
+//   console.log("start wait");
+//   const wait = (ms: number) =>
+//     new Promise((resolve) => {
+//       setTimeout(resolve, ms);
+//     });
 
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  console.log("end wait");
-  toBuyItemsList = [...toBuyItemsList, newItem];
-  revalidatePath("/food");
-}
+//   await new Promise((resolve) => setTimeout(resolve, 1000));
+//   console.log("end wait");
+//   toBuyItemsList = [...toBuyItemsList, newItem];
+//   revalidatePath("/food");
+// }
 
 // export async function removeFromToBuy(itemId: string) {
 //   console.log("running removeFromToBuy");
@@ -92,29 +92,29 @@ const invItem3 = {
 
 let inventory = [invItem1, invItem2, invItem3];
 
-export async function getInventory() {
-  console.log("running getInventory");
-  return JSON.parse(JSON.stringify(inventory));
-}
+// export async function getInventory() {
+//   console.log("running getInventory");
+//   return JSON.parse(JSON.stringify(inventory));
+// }
 
-export async function addToInvDirect(formData: FormData) {
-  console.log("running addToInvDirect");
-  const newInvItem = {
-    itemName: formData.get("itemName")?.toString() || "",
-    size: Number(formData.get("size")),
-    units: formData.get("unit")?.toString() || "",
-    quantity: Number(formData.get("quantity")),
-    id: temp.toString(),
-    expiry: formData.get("exp") ? dayjs(formData.get("exp")?.toString()) : null,
-  };
+// export async function addToInvDirect(formData: FormData) {
+//   console.log("running addToInvDirect");
+//   const newInvItem = {
+//     itemName: formData.get("itemName")?.toString() || "",
+//     size: Number(formData.get("size")),
+//     units: formData.get("unit")?.toString() || "",
+//     quantity: Number(formData.get("quantity")),
+//     id: temp.toString(),
+//     expiry: formData.get("exp") ? dayjs(formData.get("exp")?.toString()) : null,
+//   };
 
-  temp++;
+//   temp++;
 
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+//   await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  inventory = [...inventory, newInvItem];
-  revalidatePath("/food");
-}
+//   inventory = [...inventory, newInvItem];
+//   revalidatePath("/food");
+// }
 
 export async function increment(itemId: string) {
   console.log("running increment");
