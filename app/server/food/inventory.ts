@@ -66,6 +66,11 @@ export async function editQuantity(itemId: number, val: number) {
       },
       body: JSON.stringify({ id: itemId, value: value_string }),
     });
+    const data = await response.json();
+    if (response.status === 202) {
+      revalidatePath("/food");
+    }
+    return response.status;
   } catch (error: any) {
     console.error("FAIL : increment : inventory.ts");
     console.log(error.cause);
