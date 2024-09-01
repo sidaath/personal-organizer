@@ -69,6 +69,7 @@ export async function editQuantity(itemId: number, val: number) {
     const data = await response.json();
     if (response.status === 202) {
       revalidatePath("/food");
+      revalidatePath("/");
     }
     return response.status;
   } catch (error: any) {
