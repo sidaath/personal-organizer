@@ -3,6 +3,7 @@
 import { CHECKLIST_URL } from "../URL";
 import { ToBuyItemType } from "@/app/lib/food/definitions";
 import { revalidatePath } from "next/cache";
+import dayjs from "dayjs";
 
 export async function getToBuyList(): Promise<[ToBuyItemType] | []> {
   console.log("running getToBuyList");
@@ -21,14 +22,20 @@ export async function getToBuyList(): Promise<[ToBuyItemType] | []> {
 
 export async function addToInventory(formData: FormData): Promise<Number> {
   console.log("running add to inventory from checklist");
+
+  let expDate = null;
+  formData.get("exp") !== null
+    ? (expDate = dayjs(formData.get("exp")?.toString()).format("YYYY-MM-DD"))
+    : null;
   const id = Number(formData.get("id"));
+
   try {
     const response: Response = await fetch(CHECKLIST_URL, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id: id }),
+      body: JSON.stringify({ id: id, exp_date: expDate }),
     });
 
     if (response.status == 201) {

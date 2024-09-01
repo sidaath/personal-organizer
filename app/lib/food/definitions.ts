@@ -6,7 +6,7 @@ export type InventoryItemType = {
   size: number;
   units: string;
   quantity: number;
-  expDate: Dayjs | undefined | null;
+  expDate: Dayjs | null;
 };
 
 export type ToBuyItemType = {

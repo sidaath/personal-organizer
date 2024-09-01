@@ -23,7 +23,7 @@ export default function GroceryItem({ item }: { item: ToBuyItemType }) {
       formDataRef.current.append("size", item.size.toString());
       formDataRef.current.append("unit", item.units);
       formDataRef.current.append("quantity", item.quantity.toString());
-      formDataRef.current.append("id", item.id);
+      formDataRef.current.append("id", item.id.toString());
       console.log(formDataRef.current.get("exp"));
       await addToInventory(formDataRef.current);
     });
@@ -35,8 +35,8 @@ export default function GroceryItem({ item }: { item: ToBuyItemType }) {
         <div className="flex items-center h-5 mt-1">
           {!checkTransition && !getExp ? (
             <input
-              id={item.id}
-              name={item.id}
+              id={item.id.toString()}
+              name={item.id.toString()}
               type="checkbox"
               onChange={handleCheckBox}
               className="border-gray-200 hover:cursor-pointer rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
@@ -47,12 +47,15 @@ export default function GroceryItem({ item }: { item: ToBuyItemType }) {
               role="status"
               aria-label="loading"
             >
-              <input hidden id={item.id} />
+              <input hidden id={item.id.toString()} />
               <span className="sr-only">Loading...</span>
             </div>
           )}
         </div>
-        <label htmlFor={item.id} className="ms-3 hover:cursor-pointer">
+        <label
+          htmlFor={item.id.toString()}
+          className="ms-3 hover:cursor-pointer"
+        >
           <span className="block text-sm font-semibold text-gray-800 dark:text-neutral-300">
             {item.itemName}
           </span>
@@ -60,7 +63,7 @@ export default function GroceryItem({ item }: { item: ToBuyItemType }) {
             {`x ${item.quantity}`}
           </span>
         </label>
-        <label htmlFor={item.id} className="ms-3">
+        <label htmlFor={item.id.toString()} className="ms-3">
           <span
             id={`${item.id}`}
             className="block text-sm text-gray-600 dark:text-neutral-500"
