@@ -9,7 +9,7 @@ export type InventoryItemType = {
   expDate: Dayjs | null;
 };
 
-export type ToBuyItemType = {
+export type CheckListItemType = {
   id: number;
   itemName: string;
   size: number;

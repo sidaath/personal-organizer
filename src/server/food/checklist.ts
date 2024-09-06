@@ -1,11 +1,11 @@
 "use server";
 
 import { CHECKLIST_URL } from "../URL";
-import { ToBuyItemType } from "@/app/lib/food/definitions";
+import { CheckListItemType } from "@/lib/definitions";
 import { revalidatePath } from "next/cache";
 import dayjs from "dayjs";
 
-export async function getToBuyList(): Promise<[ToBuyItemType] | []> {
+export async function getChecklist(): Promise<[CheckListItemType] | []> {
   console.log("running getToBuyList");
   try {
     const inventory: Response = await fetch(CHECKLIST_URL);
