@@ -2,7 +2,7 @@ import { Box, Card, CardContent, Grid2 } from "@mui/material";
 import NewChecklistItem from "./components/NewChecklistItem";
 import CheckList from "./components/checklist/CheckList";
 
-export default function Home() {
+export default async function Home() {
   return (
     <Box sx={{ height: "98vh" }}>
       <Grid2 container spacing={0.5} sx={{ height: "100%" }}>
@@ -11,6 +11,7 @@ export default function Home() {
             <CardContent>
               <Grid2 container>
                 <NewChecklistItem itemType="checklist" />
+                <CheckList />
               </Grid2>
             </CardContent>
           </Card>
