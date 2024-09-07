@@ -1,6 +1,7 @@
 import { Box, Card, CardContent, Grid2 } from "@mui/material";
 import NewChecklistItem from "./components/NewChecklistItem";
 import CheckList from "./components/checklist/CheckList";
+import Inventory from "./components/inventory/Inventory";
 
 export default async function Home() {
   return (
@@ -21,6 +22,7 @@ export default async function Home() {
             <CardContent>
               <Grid2 container>
                 <NewChecklistItem itemType="inventory" />
+                <Inventory />
               </Grid2>
             </CardContent>
           </Card>
