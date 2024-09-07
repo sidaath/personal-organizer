@@ -6,14 +6,14 @@ import { revalidatePath } from "next/cache";
 import dayjs from "dayjs";
 
 export async function getChecklist(): Promise<[CheckListItemType] | []> {
-  console.log("running getToBuyList");
+  console.log("running getChecklist");
   try {
     const inventory: Response = await fetch(CHECKLIST_URL);
     const data: [] = await inventory.json();
     return data;
   } catch (error: any) {
     console.error(
-      "FAILED: getToBuyList() : fetch for checklist items at " + CHECKLIST_URL
+      "FAILED: getChecklist() : fetch for checklist items at " + CHECKLIST_URL
     );
     console.log(error.cause);
     return [];
