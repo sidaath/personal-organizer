@@ -19,8 +19,8 @@ export default async function Home() {
         </Grid2>
         <Grid2 size={{ xs: 12, md: 6 }} sx={{ height: "100%" }}>
           <Card sx={{ height: "100%" }}>
-            <CardContent>
-              <Grid2 container>
+            <CardContent sx={{ height: "100%" }}>
+              <Grid2 container sx={{ height: "100%" }}>
                 <NewChecklistItem itemType="inventory" />
                 <Inventory />
               </Grid2>
