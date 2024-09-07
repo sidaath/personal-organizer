@@ -30,6 +30,7 @@ export async function addToInvDirect(formData: FormData): Promise<number> {
     expDate: formData.get("exp")
       ? dayjs(formData.get("exp")?.toString()).format("YYYY-MM-DD")
       : null,
+    price: null,
   };
 
   console.log(newInvItem);
@@ -44,7 +45,7 @@ export async function addToInvDirect(formData: FormData): Promise<number> {
     });
     const resData = await response.json();
     if (response.status === 201) {
-      revalidatePath("/food");
+      revalidatePath("/");
     }
     return response.status;
   } catch (error: any) {

@@ -49,8 +49,8 @@ export async function addToInventory(formData: FormData): Promise<Number> {
   }
 }
 
-export async function addNewItemToBuy(formData: FormData): Promise<Number> {
-  console.log("ruinning addNewItemToBuy");
+export async function addChecklistItem(formData: FormData): Promise<Number> {
+  console.log("running addChecklistItem");
   const newItem = {
     itemName: formData.get("itemName")?.toString() || "",
     size: Number(formData.get("size")),
@@ -69,11 +69,11 @@ export async function addNewItemToBuy(formData: FormData): Promise<Number> {
     });
 
     if (response.status == 201) {
-      revalidatePath("/food");
+      revalidatePath("/");
     }
     return response.status;
   } catch (error: any) {
-    console.error("FAILED : addNewItemToBuy() : chekclist");
+    console.error("FAILED : addChecklistItem() : chekclist");
     console.log(error.cause);
     return error.cause.errno;
   }

@@ -2,6 +2,8 @@ import { Box, Card, CardContent, Grid2 } from "@mui/material";
 import NewChecklistItem from "./components/NewChecklistItem";
 import CheckList from "./components/checklist/CheckList";
 import Inventory from "./components/inventory/Inventory";
+import { addChecklistItem } from "@/server/food/checklist";
+import { addToInvDirect } from "@/server/food/inventory";
 
 export default async function Home() {
   return (
@@ -11,7 +13,10 @@ export default async function Home() {
           <Card sx={{ height: "100%" }}>
             <CardContent sx={{ height: "100%" }}>
               <Grid2 container sx={{ height: "100%" }}>
-                <NewChecklistItem itemType="checklist" />
+                <NewChecklistItem
+                  itemType="checklist"
+                  formHandler={addChecklistItem}
+                />
                 <CheckList />
               </Grid2>
             </CardContent>
@@ -21,7 +26,10 @@ export default async function Home() {
           <Card sx={{ height: "100%" }}>
             <CardContent sx={{ height: "100%" }}>
               <Grid2 container sx={{ height: "100%" }}>
-                <NewChecklistItem itemType="inventory" />
+                <NewChecklistItem
+                  itemType="inventory"
+                  formHandler={addToInvDirect}
+                />
                 <Inventory />
               </Grid2>
             </CardContent>
