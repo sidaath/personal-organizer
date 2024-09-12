@@ -6,7 +6,12 @@ export default async function CheckList() {
   const data = await getChecklist();
 
   return (
-    <Grid2 container sx={{ height: "100%", overflowY: "auto" }} marginTop={3}>
+    <Grid2
+      container
+      sx={{ height: "100%", overflowY: "auto" }}
+      marginTop={3}
+      alignContent={"start"}
+    >
       <Grid2 size={4}>
         <Typography variant="h6">Item</Typography>
       </Grid2>
