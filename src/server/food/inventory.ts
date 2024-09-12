@@ -27,7 +27,7 @@ export async function addToInvDirect(formData: FormData): Promise<number> {
     units: formData.get("unit")?.toString() || "",
     quantity: Number(formData.get("quantity")),
     id: 0,
-    expDate: formData.get("exp")
+    expDate: formData.get("expDate")
       ? dayjs(formData.get("exp")?.toString()).format("YYYY-MM-DD")
       : null,
     price: null,

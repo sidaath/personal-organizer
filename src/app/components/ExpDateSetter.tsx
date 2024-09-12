@@ -34,6 +34,7 @@ export default function ExpDateDialog() {
       {checked && (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
+            name="expDate"
             label="Exp Date"
             defaultValue={dayjs(Date.now())}
             slotProps={{ field: { clearable: true, onClear: clearDate } }}
