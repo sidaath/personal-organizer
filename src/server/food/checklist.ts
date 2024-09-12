@@ -20,14 +20,17 @@ export async function getChecklist(): Promise<[CheckListItemType] | []> {
   }
 }
 
-export async function addToInventory(formData: FormData): Promise<Number> {
+export async function addToInventory(
+  itemId: number,
+  formData: FormData
+): Promise<Number> {
   console.log("running add to inventory from checklist");
 
   let expDate = null;
   formData.get("exp") !== null
     ? (expDate = dayjs(formData.get("exp")?.toString()).format("YYYY-MM-DD"))
     : null;
-  const id = Number(formData.get("id"));
+  const id = itemId;
 
   try {
     const response: Response = await fetch(CHECKLIST_URL, {
