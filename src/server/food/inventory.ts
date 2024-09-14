@@ -104,3 +104,19 @@ export async function editQuantity(
     return { ...oldrow };
   }
 }
+
+export async function deleteItem(id: number) {
+  const URI = INVENTORY_URL + "/" + id;
+  try {
+    const response = await fetch(URI, {
+      method: "DELETE",
+    });
+    if (response.status === 200) {
+      revalidatePath("/");
+    }
+  } catch (error: any) {
+    console.error("FAILED : deleteItem() : invenetory");
+    console.log(error.cause);
+    return error.cause.errno;
+  }
+}

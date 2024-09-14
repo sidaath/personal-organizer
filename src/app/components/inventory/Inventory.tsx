@@ -1,6 +1,8 @@
 import { InventoryItemType } from "@/lib/definitions";
+import { renderDeleteItemBtn } from "@/lib/grid_delete_row";
 import { editQuantity, getDisplayInventory } from "@/server/food/inventory";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { Button } from "@mui/material";
+import { DataGrid, GridApi, GridColDef } from "@mui/x-data-grid";
 
 export default async function Inventory() {
   const data: [InventoryItemType] | [] = await getDisplayInventory();
@@ -10,6 +12,12 @@ export default async function Inventory() {
     { field: "size", headerName: "Size" },
     { field: "quantity", headerName: "Quantity", editable: true },
     { field: "expDate", headerName: "Expiry Date" },
+    {
+      field: "action",
+      headerName: "Delete",
+      sortable: false,
+      renderCell: renderDeleteItemBtn,
+    },
   ];
 
   return (
