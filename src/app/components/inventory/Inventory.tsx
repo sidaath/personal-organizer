@@ -26,7 +26,13 @@ export default async function Inventory() {
 
   const rows: GridRowsProp = forRows;
 
-  return <DataGrid rows={rows} columns={cols} sx={{ marginTop: 4 }} />;
+  return (
+    <DataGrid
+      rows={rows}
+      columns={cols}
+      sx={{ marginTop: { xs: 20, md: 5 } }}
+    />
+  );
 }
 
 //TODO
