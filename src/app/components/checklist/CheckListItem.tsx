@@ -16,8 +16,14 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import ExpDateDialog from "../ExpDateSetter";
-import { Add, Remove } from "@mui/icons-material";
-import { addToInventory } from "@/server/food/checklist";
+import {
+  Add,
+  Delete,
+  DeleteForever,
+  DeleteOutline,
+  Remove,
+} from "@mui/icons-material";
+import { addToInventory, deleteItem } from "@/server/food/checklist";
 
 export default function CheckListItem({ item }: { item: CheckListItemType }) {
   const [checked, setChecked] = useState(false);
@@ -29,6 +35,7 @@ export default function CheckListItem({ item }: { item: CheckListItemType }) {
     console.log(formData.get("expDate"));
     addToInventory(item, formData);
   }
+
   return (
     <Grid2 container>
       <Grid2 size={4}>
@@ -54,6 +61,15 @@ export default function CheckListItem({ item }: { item: CheckListItemType }) {
       </Grid2>
       <Grid2 size={3}>
         <Typography variant="subtitle2">{item.quantity}</Typography>
+      </Grid2>
+      <Grid2 size={2}>
+        <IconButton
+          onClick={() => {
+            deleteItem(item.id);
+          }}
+        >
+          <DeleteOutline />
+        </IconButton>
       </Grid2>
       <Dialog open={dialog} fullWidth>
         <form action={submitItem}>

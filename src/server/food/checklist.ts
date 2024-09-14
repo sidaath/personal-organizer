@@ -85,3 +85,19 @@ export async function addChecklistItem(formData: FormData): Promise<Number> {
     return error.cause.errno;
   }
 }
+
+export async function deleteItem(id: number) {
+  const uri = CHECKLIST_URL + "/" + id;
+  try {
+    const response = await fetch(uri, {
+      method: "DELETE",
+    });
+    if (response.status === 200) {
+      revalidatePath("/");
+    }
+  } catch (error: any) {
+    console.error("FAILED : deleteItem() : checklist");
+    console.log(error.cause);
+    return error.cause.errno;
+  }
+}
