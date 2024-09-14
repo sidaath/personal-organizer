@@ -8,7 +8,7 @@ export default async function CheckList() {
   return (
     <Grid2
       container
-      sx={{ height: "100%", overflowY: "auto" }}
+      sx={{ height: "100%", width: "100%", overflowY: "auto" }}
       marginTop={3}
       alignContent={"start"}
     >

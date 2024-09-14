@@ -21,16 +21,16 @@ export async function getChecklist(): Promise<[CheckListItemType] | []> {
 }
 
 export async function addToInventory(
-  itemId: number,
+  item: CheckListItemType,
   formData: FormData
 ): Promise<Number> {
   console.log("running add to inventory from checklist");
 
   let expDate = null;
-  formData.get("exp") !== null
+  formData.get("expDate") !== null
     ? (expDate = dayjs(formData.get("exp")?.toString()).format("YYYY-MM-DD"))
     : null;
-  const id = itemId;
+  const id = item.id;
 
   try {
     const response: Response = await fetch(CHECKLIST_URL, {
@@ -38,11 +38,15 @@ export async function addToInventory(
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id: id, exp_date: expDate }),
+      body: JSON.stringify({
+        id: id,
+        exp_date: expDate,
+        quantity: item.quantity,
+      }),
     });
 
     if (response.status == 201) {
-      revalidatePath("/food");
+      revalidatePath("/");
     }
     return response.status;
   } catch (error: any) {

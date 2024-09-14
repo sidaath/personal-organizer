@@ -27,7 +27,7 @@ export default function CheckListItem({ item }: { item: CheckListItemType }) {
   function submitItem(formData: FormData) {
     console.log(item.id);
     console.log(formData.get("expDate"));
-    addToInventory(item.id, formData);
+    addToInventory(item, formData);
   }
   return (
     <Grid2 container>
