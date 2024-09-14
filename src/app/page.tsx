@@ -24,13 +24,20 @@ export default async function Home() {
         </Grid2>
         <Grid2 size={{ xs: 12, md: 6 }} sx={{ height: "100%" }}>
           <Card sx={{ height: "100%" }}>
-            <CardContent sx={{ height: "100%" }}>
+            <CardContent sx={{ height: { xs: "85%", md: "92%" } }}>
               <Grid2 container sx={{ height: "100%" }}>
-                <NewChecklistItem
-                  itemType="inventory"
-                  formHandler={addToInvDirect}
-                />
-                <Inventory />
+                <Grid2>
+                  <NewChecklistItem
+                    itemType="inventory"
+                    formHandler={addToInvDirect}
+                  />
+                </Grid2>
+                <Grid2
+                  marginTop={{ xs: 16, md: 0 }}
+                  sx={{ height: "98%", width: "100%" }}
+                >
+                  <Inventory />
+                </Grid2>
               </Grid2>
             </CardContent>
           </Card>
