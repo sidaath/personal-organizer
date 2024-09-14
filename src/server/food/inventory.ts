@@ -3,12 +3,33 @@
 import { INVENTORY_URL } from "../URL";
 import { revalidatePath } from "next/cache";
 import dayjs from "dayjs";
+import { DisplayInventoryItemType, InventoryItemType } from "@/lib/definitions";
 
 export async function getInventory(): Promise<[]> {
   console.log("running getInventory");
   try {
     const inventory: Response = await fetch(INVENTORY_URL);
     const data: [] = await inventory.json();
+    return data;
+  } catch (error: any) {
+    console.error(
+      "FAILED: getInventory() : fetch for inventory items at " + INVENTORY_URL
+    );
+    console.log(error.cause);
+    return [];
+  }
+}
+
+export async function getDisplayInventory(): Promise<[]> {
+  console.log("running getInventory");
+  try {
+    const inventory: Response = await fetch(INVENTORY_URL);
+    const data: [] = await inventory.json();
+    if (data) {
+      data.map((item: InventoryItemType | DisplayInventoryItemType) => {
+        item.expDate ? null : (item.expDate = "X");
+      });
+    }
     return data;
   } catch (error: any) {
     console.error(
@@ -55,9 +76,12 @@ export async function addToInvDirect(formData: FormData): Promise<number> {
   }
 }
 
-export async function editQuantity(itemId: number, val: number) {
+export async function editQuantity(
+  newrow: InventoryItemType,
+  oldrow: InventoryItemType
+): Promise<InventoryItemType> {
   console.log("running editQuantity");
-  const value_string: string = "quantity;;" + val.toString();
+  const value_string: string = "quantity;;" + newrow.quantity;
 
   try {
     const response = await fetch(INVENTORY_URL, {
@@ -65,16 +89,18 @@ export async function editQuantity(itemId: number, val: number) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id: itemId, value: value_string }),
+      body: JSON.stringify({ id: newrow.id, value: value_string }),
     });
     const data = await response.json();
     if (response.status === 202) {
-      revalidatePath("/food");
       revalidatePath("/");
+      return { ...newrow };
+    } else {
+      return { ...oldrow };
     }
-    return response.status;
   } catch (error: any) {
-    console.error("FAIL : increment : inventory.ts");
+    console.error("FAIL : editQuantity : inventory.ts");
     console.log(error.cause);
+    return { ...oldrow };
   }
 }
