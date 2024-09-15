@@ -94,7 +94,13 @@ export default function CheckListItem({ item }: { item: CheckListItemType }) {
                   </IconButton>
                 </Grid2>
                 <Grid2 size={{ xs: 4, md: 4 }}>
-                  <TextField value={qty} />
+                  <TextField
+                    value={qty}
+                    onChange={(e) => {
+                      setQty(Number(e.target.value));
+                      item.quantity = Number(e.target.value);
+                    }}
+                  />
                 </Grid2>
                 <Grid2 size={{ xs: 4, md: 4 }}>
                   <IconButton
